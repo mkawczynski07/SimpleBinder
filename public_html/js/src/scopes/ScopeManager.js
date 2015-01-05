@@ -1,5 +1,5 @@
 (function () {
-	SimpleBinder.module('scopes').ScopeManager = function () {
+	SimpleBinder.modules.scopes.ScopeManager = function () {
 		var me = this, scopes = {}, $rootScope, Utils = SimpleBinder.modules.utils,
 				GUID = Utils.GUID, TimeLogger = Utils.TimeLogger;
 

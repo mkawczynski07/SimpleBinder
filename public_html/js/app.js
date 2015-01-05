@@ -1,7 +1,7 @@
 (function () {
 
 	/* tworzenie scopow */
-	var scopeManager = new SimpleBinder.module('scopes').ScopeManager();
+	var scopeManager = new SimpleBinder.modules.scopes.ScopeManager();
 	scopeManager.build();
 	/* koniec tworzenie scopow */
 
@@ -11,7 +11,7 @@
 
 	binders = [];
 
-	var id = 0, SimpleBind = SimpleBinder.module('binders').SimpleBind;
+	var id = 0, SimpleBind = SimpleBinder.modules.binders.SimpleBind;
 	for (; x < length; x += 1) {
 
 		node = nodes[x];

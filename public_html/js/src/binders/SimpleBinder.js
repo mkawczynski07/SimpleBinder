@@ -19,7 +19,7 @@
 		Object.observe(me.$scope, me.scopeChangeCallback);
 		me.initElement();
 
-	}, binders = SimpleBinder.module('binders');
+	};
 
 	SimpleBind.prototype.getScopeForObserve = function () {
 		var me = this;
@@ -37,6 +37,6 @@
 		me.$element.innerHTML = me.$scope[me.modelName];
 	};
 
-	binders.SimpleBind = SimpleBind;
+	SimpleBinder.modules.binders.SimpleBind = SimpleBind;
 
 })();

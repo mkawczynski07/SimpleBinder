@@ -1,5 +1,5 @@
 (function () {
-	var utils = SimpleBinder.module('utils');
+	var utils = SimpleBinder.modules.utils;
 
 	utils.GUID = {
 		get: function () {

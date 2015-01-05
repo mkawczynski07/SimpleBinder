@@ -1,7 +1,11 @@
 var SimpleBinder;
 (function () {
 	SimpleBinder = {
-		modules: {},
+		modules: {
+			utils: {},
+			binders: {},
+			scopes: {}
+		},
 		module: function (moduleName) {
 			var path = moduleName.split('.'), x = 0, length = path.length, module,
 					current = SimpleBinder.modules;
