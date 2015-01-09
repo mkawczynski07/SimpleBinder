@@ -3,7 +3,7 @@
 		var me = this;
 
 		me.$element = $element;
-		me.$scope = me.getScopeForObserve();
+		me.$scope = me.getScope();
 		me.modelName = me.getModelName();
 
 		me.scopeChangeCallback = function (changes) {
@@ -21,7 +21,7 @@
 
 	};
 
-	SimpleBind.prototype.getScopeForObserve = function () {
+	SimpleBind.prototype.getScope = function () {
 		var me = this;
 		return me.$element.$binding.$scope;
 	};
@@ -37,6 +37,7 @@
 		me.$element.innerHTML = me.$scope[me.modelName];
 	};
 
+	SimpleBinder.modules.utils.inherit(SimpleBind, SimpleBinder.modules.binders.Bind);
 	SimpleBinder.modules.binders.SimpleBind = SimpleBind;
 
 })();

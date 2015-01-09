@@ -34,5 +34,13 @@
 			}
 		}
 	};
+	utils.inherit = function (Child, Parent) {
+		var proto = Child.prototype;
+		Child.prototype = new Parent();
+		Child.prototype.__proto__ = proto;
+		Child.prototype.callParents = function (obj, args) {
+			Parent.apply(obj, args);
+		};
+	};
 
 })();

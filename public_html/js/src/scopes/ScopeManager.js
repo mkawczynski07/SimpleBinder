@@ -3,10 +3,16 @@
 		var me = this, scopes = {}, $rootScope, Utils = SimpleBinder.modules.utils,
 				GUID = Utils.GUID, TimeLogger = Utils.TimeLogger;
 
+		me.const = {
+			SCOPE_CLASS_NAME: 'sb-scope'
+		};
+
 		me.build = function () {
 			var timeLogger = new TimeLogger('Create scopes');
 			me.createRootScope();
 			me.createScopesForSelector('[controller]');
+			me.setElementScopes('[simple-repeat]');
+			
 			me.setElementScopes('[simple-bind]');
 			timeLogger.end();
 		};
@@ -21,6 +27,7 @@
 			Utils.elements.foreEach(selector, function ($element) {
 				$scope = me.createElementScope($element);
 				me.registerScope($scope);
+				me.addScopeClassToElement($element);
 			});
 		};
 
@@ -28,8 +35,7 @@
 			var $elementWithScope;
 			Utils.elements.foreEach(selector, function ($element) {
 				$elementWithScope = Utils.elements.closest($element, function ($parent) {
-					var ctrl = $parent.attributes.getNamedItem('controller');
-					return typeof ctrl !== 'undefined' || ctrl !== null;
+					return $parent.classList.contains(me.const.SCOPE_CLASS_NAME);
 				});
 				$element.$binding = $elementWithScope.$binding;
 			});
@@ -42,6 +48,10 @@
 				}
 			};
 			return $element.$binding.$scope;
+		};
+
+		me.addScopeClassToElement = function ($element) {
+			$element.classList.add(me.const.SCOPE_CLASS_NAME);
 		};
 
 		me.registerScope = function ($scope) {

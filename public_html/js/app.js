@@ -2,6 +2,7 @@
 
 	/* tworzenie scopow */
 	var scopeManager = new SimpleBinder.modules.scopes.ScopeManager();
+	SimpleBinder.scopeManager = scopeManager;
 	scopeManager.build();
 	/* koniec tworzenie scopow */
 
