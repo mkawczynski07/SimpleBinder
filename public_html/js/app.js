@@ -7,23 +7,39 @@
 	/* koniec tworzenie scopow */
 
 
-	var nodes = document.querySelectorAll("[simple-bind]"),
-			length = nodes.length, x = 0, node;
+	(function () {
+		var nodes = document.querySelectorAll("[simple-repeat]"),
+				length = nodes.length, x = 0, node;
 
-	binders = [];
+		binders = [];
 
-	var id = 0, SimpleBind = SimpleBinder.modules.binders.SimpleBind;
-	for (; x < length; x += 1) {
+		var id = 0, Repeat = SimpleBinder.modules.binders.Repeat;
+		for (; x < length; x += 1) {
+			node = nodes[x];
+			binders.push(new Repeat(node));
 
-		node = nodes[x];
-		node.$binding.$scope['test' + id] = "Wartość [" + id + "] = jakas";
-		id += 1;
-		if (id > 1) {
-			id = 0;
 		}
+	})();
+
+	(function () {
+		var nodes = document.querySelectorAll("[simple-bind]"),
+				length = nodes.length, x = 0, node;
+
+		binders = [];
+
+		var id = 0, SimpleBind = SimpleBinder.modules.binders.SimpleBind;
+		for (; x < length; x += 1) {
+
+			node = nodes[x];
+			node.$binding.$scope['test' + id] = "Wartość [" + id + "] = jakas";
+			id += 1;
+			if (id > 1) {
+				id = 0;
+			}
 
 
-		binders.push(new SimpleBind(node));
+			binders.push(new SimpleBind(node));
 
-	}
+		}
+	})();
 })();
