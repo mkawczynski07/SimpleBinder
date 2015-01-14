@@ -3,18 +3,24 @@
 		var me = this;
 
 		me.$element = $element;
-		me.$parent =
-				me.$scope = me.getScope();
+		me.$parent = me.$element.parentElement;
+		me.$scope = me.getScope();
 		me.metadata = me.resolveDataAndItemObjectName();
 		me.data = me.getData();
+		me.nodes = [];
 
-		me.$element.parentElement.style.visibility = 'hidden';
+		me.$parent.style.visibility = 'hidden';
 
 		me.loopOverData();
 
 		//loop
 
-		me.$element.parentElement.style.visibility = 'visible';
+		me.$parent.style.visibility = 'visible';
+	};
+
+	Repeat.prototype.getScope = function () {
+		var me = this;
+		return me.$element.$binding.$scope;
 	};
 
 	Repeat.prototype.getData = function () {
@@ -23,19 +29,27 @@
 	};
 
 	Repeat.prototype.resolveDataAndItemObjectName = function () {
-		var me = this, splitedName = me.$element.attributes.getNamedItem('simple-repeat').split[':'];
+		var me = this, splitedName = me.$element.attributes.getNamedItem('simple-repeat').value.split(':');
 		return{
-			itemName: splitedName[1].trim(),
-			dataName: splitedName[0].trim()
+			itemName: splitedName[0].trim(),
+			dataName: splitedName[1].trim()
 		};
 	};
 
 	Repeat.prototype.loopOverData = function () {
-		var me = this, x = 1, length = me.data.length, row;
-		console.log(me.data);
+		var me = this, x = 0, length = me.data.length, $row;
 		for (; x < length; x += 1) {
-			row = me.$element.cloneNode(true);
-			me.parentElement.appendChild(row);
+			if (x === 0) {
+				me.$element.$binding.$scope[me.metadata.itemName] = me.data[x];
+				me.nodes.push(me.$element);
+			} else {
+				$row = me.$element.cloneNode(true);
+				$row.removeAttribute('simple-repeat');
+				me.$parent.appendChild($row);
+				SimpleBinder.scopeManager.createAndRegisterScopeForElement($row);
+				$row.$binding.$scope[me.metadata.itemName] = me.data[x];
+				me.nodes.push($row);
+			}
 		}
 	};
 

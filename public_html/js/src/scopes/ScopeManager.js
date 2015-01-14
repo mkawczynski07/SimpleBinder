@@ -11,9 +11,6 @@
 			var timeLogger = new TimeLogger('Create scopes');
 			me.createRootScope();
 			me.createScopesForSelector('[controller]');
-			me.setElementScopes('[simple-repeat]');
-			
-			me.setElementScopes('[simple-bind]');
 			timeLogger.end();
 		};
 
@@ -55,13 +52,22 @@
 		};
 
 		me.registerScope = function ($scope) {
-			scopes[$scope.id] = $scope;
+			scopes[$scope.$id] = $scope;
+		};
+
+		me.createAndRegisterScopeForElement = function ($element) {
+			var $scope = me.createElementScope($element);
+			me.addScopeClassToElement($element);
+			me.registerScope($scope);
+			return $scope;
 		};
 
 		return {
 			scopes: scopes,
 			build: me.build,
-			$rootScope: $rootScope
+			$rootScope: $rootScope,
+			createAndRegisterScopeForElement: me.createAndRegisterScopeForElement,
+			setElementScopes: me.setElementScopes
 		};
 
 	};

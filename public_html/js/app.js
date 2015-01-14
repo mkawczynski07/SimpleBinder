@@ -6,7 +6,7 @@
 	scopeManager.build();
 	/* koniec tworzenie scopow */
 
-
+	scopeManager.setElementScopes('[simple-repeat]');
 	(function () {
 		var nodes = document.querySelectorAll("[simple-repeat]"),
 				length = nodes.length, x = 0, node;
@@ -16,11 +16,22 @@
 		var id = 0, Repeat = SimpleBinder.modules.binders.Repeat;
 		for (; x < length; x += 1) {
 			node = nodes[x];
+
+			node.$binding.$scope.rows = [];
+			for (var i = 0; i < 2000; i += 1) {
+				node.$binding.$scope.rows.push({
+					id: i,
+					name: 'test item : ' + i
+				});
+			}
+
 			binders.push(new Repeat(node));
 
 		}
 	})();
 
+
+	scopeManager.setElementScopes('[simple-bind]');
 	(function () {
 		var nodes = document.querySelectorAll("[simple-bind]"),
 				length = nodes.length, x = 0, node;

@@ -10,15 +10,43 @@
 			var x = 0, length = changes.length, change;
 			for (; x < length; x += 1) {
 				change = changes[x];
-				if (change.name === me.modelName) {
-					me.$element.innerHTML = change.object[me.modelName];
+				if (me.createModelname(change.name) === me.modelName) {
+					me.$element.innerHTML = me.getModelValue(change.object);
 				}
 			}
 		};
 
-		Object.observe(me.$scope, me.scopeChangeCallback);
+		Object.observe(me.getObjectForObserve(), me.scopeChangeCallback);
 		me.initElement();
 
+	};
+
+	SimpleBind.prototype.createModelname = function (name) {
+		var me = this;
+		if (me.modelName.indexOf('.') !== -1) {
+			return me.modelName.split('.')[0] + '.' + name;
+		}
+		return name;
+	};
+
+	SimpleBind.prototype.getObjectForObserve = function () {
+		var me = this;
+		if (me.modelName.indexOf('.') !== -1) {
+			return me.$scope[me.modelName.split('.')[0]];
+		}
+		return me.$scope;
+	};
+
+	SimpleBind.prototype.getModelValue = function (model) {
+		var me = this, splitedName;
+		if (me.modelName.indexOf('.') !== -1) {
+			splitedName = me.modelName.split('.');
+			if (typeof model['$id'] !== 'undefined') {
+				return model[splitedName[0]][splitedName[1]];
+			}
+			return model[splitedName[1]];
+		}
+		return model[me.modelName];
 	};
 
 	SimpleBind.prototype.getScope = function () {
@@ -34,7 +62,7 @@
 
 	SimpleBind.prototype.initElement = function () {
 		var me = this;
-		me.$element.innerHTML = me.$scope[me.modelName];
+		me.$element.innerHTML = me.getModelValue(me.$scope);
 	};
 
 	SimpleBinder.modules.utils.inherit(SimpleBind, SimpleBinder.modules.binders.Bind);
