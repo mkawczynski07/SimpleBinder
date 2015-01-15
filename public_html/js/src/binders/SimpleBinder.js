@@ -8,12 +8,9 @@
 		me.modelName = me.getModelName();
 
 		me.scopeChangeCallback = function (changes) {
-			var x = 0, length = changes.length, change;
-			for (; x < length; x += 1) {
-				change = changes[x];
-				if (me.createModelname(change.name) === me.modelName) {
-					me.updateElementText();
-				}
+			if (utils.isDefined(changes[0])
+					&& me.createModelname(changes[0].name) === me.modelName) {
+				me.updateElementText();
 			}
 		};
 

@@ -8,20 +8,20 @@
 		},
 		current: Math.random()
 	};
+	
 	utils.TimeLogger = function (msg) {
 		var me = this, date = new Date();
-		if (typeof msg !== 'undefined') {
-			console.log('[' + date + '] Start : ' + msg + '.');
-		}
+		console.log('[' + date + '] Start : ' + msg || '' + '.');
 		me.end = function () {
 			var current = new Date(), diff = current - date;
-			console.log('[' + current + '] End : ' + msg + '. In: ' + diff + 'ms, ' + Math.round(diff / 1000) + 's.');
+			console.log('[' + current + '] End : ' + msg || '' + '. In: ' + diff + 'ms, ' + Math.round(diff / 1000) + 's.');
 		};
 	};
+	
 	utils.elements = {
 		closest: function ($element, fn) {
 			var $parent = $element.parentElement;
-			if (typeof $parent !== 'undefined') {
+			if (utils.isDefined($parent)) {
 				return fn.call($parent, $parent) === true ? $parent : this.closest($parent, fn);
 			}
 		},
@@ -43,6 +43,11 @@
 			$element.appendChild(document.createTextNode(text));
 		}
 	};
+	
+	utils.isDefined = function (obj) {
+		return typeof obj !== 'undefined';
+	};
+	
 	utils.inherit = function (Child, Parent) {
 		Child.prototype = new Parent();
 		Child.prototype.callParents = function (obj, args) {

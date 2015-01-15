@@ -1,10 +1,10 @@
 (function () {
 
-	/* tworzenie scopow */
+	/* scope building */
 	var scopeManager = new SimpleBinder.modules.scopes.ScopeManager();
 	SimpleBinder.scopeManager = scopeManager;
 	scopeManager.build();
-	/* koniec tworzenie scopow */
+	/* scope building end */
 
 	scopeManager.setElementScopes('[simple-repeat]');
 	(function () {
