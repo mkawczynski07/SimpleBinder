@@ -18,7 +18,7 @@
 			node = nodes[x];
 
 			node.$binding.$scope.rows = [];
-			for (var i = 0; i < 2000; i += 1) {
+			for (var i = 0; i < 20; i += 1) {
 				node.$binding.$scope.rows.push({
 					id: i,
 					name: 'test item : ' + i

@@ -32,12 +32,19 @@
 				$element = elements[x];
 				fn.call(scope || $element, $element);
 			}
+		},
+		empty: function ($element) {
+			while ($element.firstChild) {
+				$element.removeChild($element.firstChild);
+			}
+		},
+		setElementText: function ($element, text) {
+			utils.elements.empty($element);
+			$element.appendChild(document.createTextNode(text));
 		}
 	};
 	utils.inherit = function (Child, Parent) {
-		var proto = Child.prototype;
 		Child.prototype = new Parent();
-		Child.prototype.__proto__ = proto;
 		Child.prototype.callParents = function (obj, args) {
 			Parent.apply(obj, args);
 		};

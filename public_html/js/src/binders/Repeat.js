@@ -18,10 +18,7 @@
 		me.$parent.style.visibility = 'visible';
 	};
 
-	Repeat.prototype.getScope = function () {
-		var me = this;
-		return me.$element.$binding.$scope;
-	};
+	SimpleBinder.modules.utils.inherit(Repeat, SimpleBinder.modules.binders.Bind);
 
 	Repeat.prototype.getData = function () {
 		var me = this;
@@ -53,7 +50,6 @@
 		}
 	};
 
-	SimpleBinder.modules.utils.inherit(Repeat, SimpleBinder.modules.binders.Bind);
 	SimpleBinder.modules.binders.Repeat = Repeat;
 
 })();

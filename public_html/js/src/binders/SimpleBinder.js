@@ -1,6 +1,7 @@
 (function () {
 	var SimpleBind = function ($element) {
 		var me = this;
+		me.callParents(this, $element);
 
 		me.$element = $element;
 		me.$scope = me.getScope();
@@ -11,7 +12,7 @@
 			for (; x < length; x += 1) {
 				change = changes[x];
 				if (me.createModelname(change.name) === me.modelName) {
-					me.$element.innerHTML = me.getModelValue(change.object);
+					me.updateElementText();
 				}
 			}
 		};
@@ -19,6 +20,13 @@
 		Object.observe(me.getObjectForObserve(), me.scopeChangeCallback);
 		me.initElement();
 
+	}, utils = SimpleBinder.modules.utils;
+
+	utils.inherit(SimpleBind, SimpleBinder.modules.binders.Bind);
+
+	SimpleBind.prototype.updateElementText = function () {
+		var me = this;
+		utils.elements.setElementText(me.$element, me.getModelValue(me.$scope));
 	};
 
 	SimpleBind.prototype.createModelname = function (name) {
@@ -49,12 +57,6 @@
 		return model[me.modelName];
 	};
 
-	SimpleBind.prototype.getScope = function () {
-		var me = this;
-		return me.$element.$binding.$scope;
-	};
-
-
 	SimpleBind.prototype.getModelName = function () {
 		var me = this;
 		return me.$element.getAttribute('simple-bind');
@@ -62,10 +64,9 @@
 
 	SimpleBind.prototype.initElement = function () {
 		var me = this;
-		me.$element.innerHTML = me.getModelValue(me.$scope);
+		me.updateElementText();
 	};
 
-	SimpleBinder.modules.utils.inherit(SimpleBind, SimpleBinder.modules.binders.Bind);
 	SimpleBinder.modules.binders.SimpleBind = SimpleBind;
 
 })();
