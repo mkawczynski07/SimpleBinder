@@ -5,11 +5,10 @@
 
 		me.$element = $element;
 		me.$scope = me.getScope();
-		me.modelName = me.getModelName();
+		me.createMetaData(me.getExpression());
 
 		me.scopeChangeCallback = function (changes) {
-			if (utils.isDefined(changes[0])
-					&& me.createModelname(changes[0].name) === me.modelName) {
+			if (utils.isDefined(changes[0]) && me.isChangeForCurrentBinder(changes[0])) {
 				me.updateElementText();
 			}
 		};
@@ -21,40 +20,30 @@
 
 	utils.inherit(SimpleBind, SimpleBinder.modules.binders.Bind);
 
-	SimpleBind.prototype.updateElementText = function () {
+	SimpleBind.prototype.isChangeForCurrentBinder = function (change) {
 		var me = this;
-		utils.elements.setElementText(me.$element, me.getModelValue(me.$scope));
+		return change.name === me.metaData.finalProperty;
 	};
 
-	SimpleBind.prototype.createModelname = function (name) {
+	SimpleBind.prototype.updateElementText = function () {
 		var me = this;
-		if (me.modelName.indexOf('.') !== -1) {
-			return me.modelName.split('.')[0] + '.' + name;
-		}
-		return name;
+		utils.elements.setElementText(me.$element, me.getModelValue());
 	};
 
 	SimpleBind.prototype.getObjectForObserve = function () {
 		var me = this;
-		if (me.modelName.indexOf('.') !== -1) {
-			return me.$scope[me.modelName.split('.')[0]];
+		if (me.metaData.isNested) {
+			return me.$scope[me.metaData.mainObject];
 		}
 		return me.$scope;
 	};
 
-	SimpleBind.prototype.getModelValue = function (model) {
-		var me = this, splitedName;
-		if (me.modelName.indexOf('.') !== -1) {
-			splitedName = me.modelName.split('.');
-			if (typeof model['$id'] !== 'undefined') {
-				return model[splitedName[0]][splitedName[1]];
-			}
-			return model[splitedName[1]];
-		}
-		return model[me.modelName];
+	SimpleBind.prototype.getModelValue = function () {
+		var me = this;
+		return me.getObjectProperty(me.$scope);
 	};
 
-	SimpleBind.prototype.getModelName = function () {
+	SimpleBind.prototype.getExpression = function () {
 		var me = this;
 		return me.$element.getAttribute('simple-bind');
 	};

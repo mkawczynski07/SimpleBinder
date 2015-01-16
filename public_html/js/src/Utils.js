@@ -11,10 +11,10 @@
 	
 	utils.TimeLogger = function (msg) {
 		var me = this, date = new Date();
-		console.log('[' + date + '] Start : ' + msg || '' + '.');
+		console.log('[' + date + '] Start : ' + (msg || '') + '.');
 		me.end = function () {
 			var current = new Date(), diff = current - date;
-			console.log('[' + current + '] End : ' + msg || '' + '. In: ' + diff + 'ms, ' + Math.round(diff / 1000) + 's.');
+			console.log('[' + current + '] End : ' + (msg || '') + '. In: ' + diff + 'ms, ' + Math.round(diff / 1000) + 's.');
 		};
 	};
 	
