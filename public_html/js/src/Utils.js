@@ -54,5 +54,11 @@
 			Parent.apply(obj, args);
 		};
 	};
+	
+	utils.string = {
+		trimWhiteSpaces: function(s){
+			return s.replace(/\s/g, '');
+		}
+	};
 
 })();

@@ -36,8 +36,6 @@
 		var nodes = document.querySelectorAll("[simple-bind]"),
 				length = nodes.length, x = 0, node;
 
-		binders = [];
-
 		var id = 0, SimpleBind = SimpleBinder.modules.binders.SimpleBind;
 		for (; x < length; x += 1) {
 
