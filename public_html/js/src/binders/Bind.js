@@ -1,6 +1,6 @@
 (function () {
 	var Bind = function () {
-	};
+	}, utils = SimpleBinder.modules.utils;
 
 	Bind.prototype.getScope = function () {
 		var me = this;
@@ -9,7 +9,8 @@
 
 	Bind.prototype.createMetaData = function (expression) {
 		var me = this,
-				splited = expression.split('.');
+				trimed = utils.string.trimWhiteSpaces(expression),
+				splited = trimed.split('.');
 		me.metaData = {
 			splited: splited,
 			finalProperty: splited[splited.length - 1],
@@ -27,6 +28,10 @@
 			object = object[props[x]];
 		}
 		return object;
+	};
+
+	Bind.prototype.getExpression = function (attributeName) {
+		return this.$element.getAttribute(attributeName);
 	};
 
 	SimpleBinder.modules.binders.Bind = Bind;

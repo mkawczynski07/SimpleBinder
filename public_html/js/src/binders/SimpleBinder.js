@@ -5,7 +5,7 @@
 
 		me.$element = $element;
 		me.$scope = me.getScope();
-		me.createMetaData(me.getExpression());
+		me.createMetaData(me.getExpression('simple-bind'));
 
 		me.scopeChangeCallback = function (changes) {
 			if (utils.isDefined(changes[0]) && me.isChangeForCurrentBinder(changes[0])) {
@@ -21,13 +21,11 @@
 	utils.inherit(SimpleBind, SimpleBinder.modules.binders.Bind);
 
 	SimpleBind.prototype.isChangeForCurrentBinder = function (change) {
-		var me = this;
-		return change.name === me.metaData.finalProperty;
+		return change.name === this.metaData.finalProperty;
 	};
 
 	SimpleBind.prototype.updateElementText = function () {
-		var me = this;
-		utils.elements.setElementText(me.$element, me.getModelValue());
+		utils.elements.setElementText(this.$element, this.getModelValue());
 	};
 
 	SimpleBind.prototype.getObjectForObserve = function () {
@@ -39,18 +37,11 @@
 	};
 
 	SimpleBind.prototype.getModelValue = function () {
-		var me = this;
-		return me.getObjectProperty(me.$scope);
-	};
-
-	SimpleBind.prototype.getExpression = function () {
-		var me = this;
-		return me.$element.getAttribute('simple-bind');
+		return this.getObjectProperty(this.$scope);
 	};
 
 	SimpleBind.prototype.initElement = function () {
-		var me = this;
-		me.updateElementText();
+		this.updateElementText();
 	};
 
 	SimpleBinder.modules.binders.SimpleBind = SimpleBind;
