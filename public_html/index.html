@@ -8,19 +8,19 @@
         <script src="js/libs/jquery/jquery.js" type="text/javascript"></script>
         <script src="js/libs/jquery/bootsrap.min.js.js" type="text/javascript"></script>
     </head>
-    <body>
-        <div controller>
-            <span simple-bind="test0" stooltip></span>
+    <body controller="test.pierwszy">
+        <div>
+            <span simple-bind="id" stooltip></span>
             <br/>
-            <span simple-bind="test1" ></span>
+            <span simple-bind="value" ></span>
         </div>
-        <div controller>
-            <span simple-bind="test0" stooltip></span>
+        <div>
+            <span simple-bind="id" stooltip></span>
             <br/>
-            <span simple-bind="test1" ></span>
+            <span simple-bind="value" ></span>
         </div>
 
-        <div controller>
+        <div controller="test.drugi">
             <table class="table table-bordered table-condensed">
                 <tbody>
                     <tr simple-repeat="row : rows">
@@ -37,6 +37,7 @@
 
     <script src="js/src/Utils.js" type="text/javascript"></script>
     <script src="js/src/scopes/ScopeManager.js" type="text/javascript"></script>
+    <script src="js/src/container/ModuleManager.js" type="text/javascript"></script>
 
     <script src="js/src/binders/Bind.js" type="text/javascript"></script>
     <script src="js/src/binders/SimpleBinder.js" type="text/javascript"></script>
