@@ -1,16 +1,14 @@
 (function () {
     SimpleBinder.modules.scopes.ScopeManager = function () {
         var me = this, scopes = {}, $rootScope, Utils = SimpleBinder.modules.utils,
-                GUID = Utils.GUID, TimeLogger = Utils.TimeLogger;
+                GUID = Utils.GUID;
 
         me.const = {
             SCOPE_CLASS_NAME: 'sb-scope'
         };
 
         me.build = function () {
-            var timeLogger = new TimeLogger('Create scopes');
             me.createRootScope();
-            timeLogger.end();
         };
 
         me.createRootScope = function () {
@@ -37,7 +35,7 @@
                     return $parent.classList.contains(me.const.SCOPE_CLASS_NAME);
                 });
                 $element.$binding = $elementWithScope.$binding;
-                callback.call($element.$binding.$scope, $element.$binding.$scope, $element)
+                callback.call($element.$binding.$scope, $element.$binding.$scope, $element);
             });
         };
 

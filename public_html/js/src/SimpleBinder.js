@@ -2,6 +2,9 @@ var SimpleBinder;
 (function () {
 
     SimpleBinder = {
+        bind: function () {
+            SimpleBinder.binder.bind();
+        },
         modules: {
             utils: {},
             binders: {},
