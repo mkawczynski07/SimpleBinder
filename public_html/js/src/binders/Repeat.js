@@ -6,12 +6,21 @@
 		me.loop();
 		me.show();
 
+		me.arrayObserveCallback = function (changes) {
+			console.log(changes);
+		};
+
 		Object.observe(me.$element.$binding.$scope, function (changes) {
 			if (changes[0].name === me.metaData.finalProperty) {
+				Array.unobserve(me.getData());
 				me.data = me.getData();
+				Array.observe(me.getData(), me.arrayObserveCallback);
 				me.loop(true);
 			}
 		});
+		
+		Array.observe(me.getData(), me.arrayObserveCallback);
+
 	}, utils = SimpleBinder.modules.utils;
 
 	utils.inherit(Repeat, SimpleBinder.modules.binders.Bind);
